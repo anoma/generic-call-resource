@@ -1,0 +1,26 @@
+[workspace]
+exclude = ["generic_call_circuit"]
+members = ["generic_call_witness", "generic_call_library"]
+resolver = "3"
+
+[workspace.package]
+authors = ["Heliax <hello@heliax.dev>"]
+edition = "2024"
+license = "GPL-3.0"
+readme = "README.md"
+version = "2.0.0-rc2"
+
+[workspace.dependencies]
+alloy-primitives = "1.0.23"
+alloy-sol-types = "1.0.23"
+anoma-rm-risc0 = { version = "1.1.1", default-features = false }
+anoma-rm-risc0-gadgets = "1.1.1"
+generic_call_library = { path = "generic_call_library" }
+generic_call_witness = { path = "generic_call_witness" }
+hex = "0.4"
+lazy_static = "1.5.0"
+serde = { version = "1.0", features = ["derive"] }
+
+# Always optimize; building and running the guest takes much longer without optimization.
+[profile.dev]
+opt-level = 3

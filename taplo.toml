@@ -1,0 +1,11 @@
+include = [
+    "Cargo.toml",
+    "generic_call_witness/Cargo.toml",
+    "generic_call_library/Cargo.toml",
+    "generic_call_circuit/Cargo.toml",
+    "generic_call_circuit/methods/Cargo.toml",
+    "generic_call_circuit/methods/guest/Cargo.toml"
+]
+
+[formatting]
+reorder_keys = true
