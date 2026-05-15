@@ -1,0 +1,14 @@
+[package]
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+name = "generic_call_witness"
+readme.workspace = true
+version.workspace = true
+
+[dependencies]
+alloy-primitives = { workspace = true }
+alloy-sol-types = { workspace = true }
+anoma-rm-risc0 = { workspace = true, default-features = false }
+anoma-rm-risc0-gadgets = { workspace = true }
+serde = { workspace = true }
