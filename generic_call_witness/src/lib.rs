@@ -18,7 +18,6 @@ use anoma_rm_risc0::{
 use anoma_rm_risc0_gadgets::evm::ForwarderCalldata;
 use serde::{Deserialize, Serialize};
 
-// TODO! Move to arm lib? See `crates/transfer_witness/src/lib.rs`
 pub enum DeletionCriterion {
     Immediately = 0,
     Never = 1,
