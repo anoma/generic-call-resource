@@ -26,7 +26,7 @@ fn other_calls() -> Vec<GenericCall> {
         },
         GenericCall {
             to: EVM_TARGET_ADDR.to_vec(),
-            value: 0,
+            value: 1,
             data: vec![0xca, 0xfe, 0xba, 0xbe],
         },
     ]
@@ -73,17 +73,8 @@ fn test_created_ephemeral() {
 
 #[test]
 fn test_non_ephemeral_rejected() {
-    let label_ref = calculate_label_ref(&FORWARDER_ADDR);
-    let value_ref = calculate_value_ref(&encode_generic_call_forwarder_input(&calls()).unwrap());
-    let nk_commitment = NullifierKey::from_bytes(NF_KEY_BYTES).commit();
-    let resource = Resource {
-        logic_ref: Digest::default(),
-        label_ref,
-        value_ref,
-        nk_commitment,
-        is_ephemeral: false, // persistent — must be rejected
-        ..Default::default()
-    };
+    let mut resource = ephemeral_resource();
+    resource.is_ephemeral = false; // persistent — must be rejected
     let witness = GenericCallWitness {
         resource,
         is_consumed: false,
@@ -111,58 +102,35 @@ fn test_missing_nf_key() {
 
 #[test]
 fn test_wrong_label_ref() {
-    let forwarder_addr = FORWARDER_ADDR.to_vec();
-    let wrong_label_ref = calculate_label_ref(&[0xFFu8; 20]);
+    let mut resource = ephemeral_resource();
 
-    let calls = calls();
-    let value_ref = calculate_value_ref(&encode_generic_call_forwarder_input(&calls).unwrap());
-
-    let nk_commitment = NullifierKey::from_bytes(NF_KEY_BYTES).commit();
-    let resource = Resource {
-        logic_ref: Digest::default(),
-        label_ref: wrong_label_ref,
-        value_ref,
-        nk_commitment,
-        is_ephemeral: true,
-        ..Default::default()
-    };
+    // Use a different forwarder address in label and witness.
+    resource.label_ref = calculate_label_ref(&[0xFFu8; 20]);
     let witness = GenericCallWitness {
         resource,
         is_consumed: false,
         action_tree_root: Digest::default(),
         nf_key: None,
-        forwarder_addr,
-        calls,
+        forwarder_addr: FORWARDER_ADDR.to_vec(),
+        calls: calls(),
     };
     witness.constrain().unwrap_err();
 }
 
 #[test]
 fn test_wrong_value_ref() {
-    let forwarder_addr = FORWARDER_ADDR.to_vec();
-    let label_ref = calculate_label_ref(&forwarder_addr);
+    let mut resource = ephemeral_resource();
 
-    let calls = calls();
-    let other_calls = other_calls();
-    let wrong_value_ref =
-        calculate_value_ref(&encode_generic_call_forwarder_input(&other_calls).unwrap());
-
-    let nk_commitment = NullifierKey::from_bytes(NF_KEY_BYTES).commit();
-    let resource = Resource {
-        logic_ref: Digest::default(),
-        label_ref,
-        value_ref: wrong_value_ref,
-        nk_commitment,
-        is_ephemeral: true,
-        ..Default::default()
-    };
+    // Use different calls in value and witness.
+    resource.value_ref =
+        calculate_value_ref(&encode_generic_call_forwarder_input(&other_calls()).unwrap());
     let witness = GenericCallWitness {
         resource,
         is_consumed: false,
         action_tree_root: Digest::default(),
         nf_key: None,
-        forwarder_addr,
-        calls,
+        forwarder_addr: FORWARDER_ADDR.to_vec(),
+        calls: calls(),
     };
     witness.constrain().unwrap_err();
 }
