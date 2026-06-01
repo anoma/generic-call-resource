@@ -69,8 +69,8 @@ pub fn calculate_label_ref(forwarder_addr: &[u8]) -> Digest {
 }
 
 /// Computes `value_ref = hash(abi_encode(calls))`.
-pub fn calculate_value_ref(calls: &[u8]) -> Digest {
-    hash_bytes(calls)
+pub fn calculate_value_ref(encoded_calls: &[u8]) -> Digest {
+    hash_bytes(encoded_calls)
 }
 
 /// Witness for a single GenericCall resource (consumed or created ephemeral).
