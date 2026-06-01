@@ -65,12 +65,12 @@ pub fn encode_generic_call_forwarder_input(calls: &[GenericCall]) -> Result<Vec<
 
 /// Computes `label_ref = hash(forwarder_addr)`.
 pub fn calculate_label_ref(forwarder_addr: &[u8]) -> Digest {
-    hash_bytes(&[forwarder_addr].concat())
+    hash_bytes(forwarder_addr)
 }
 
 /// Computes `value_ref = hash(abi_encode(calls))`.
 pub fn calculate_value_ref(calls: &[u8]) -> Digest {
-    hash_bytes(&[calls].concat())
+    hash_bytes(calls)
 }
 
 /// Witness for a single GenericCall resource (consumed or created ephemeral).
