@@ -1,8 +1,8 @@
 //! Witness library for the GenericCall resource kind.
 //!
 //! A GenericCall resource can only be ephemeral. It encodes one or more EVM
-//! calls that will be forwarded through the `GenericCallForwarder` protocol
-//! adapter.
+//! calls that will be forwarded by the protocol adapter to the
+//! `GenericCallForwarder` contract.
 
 use alloy_primitives::{Address, Bytes, U256};
 use alloy_sol_types::{SolValue, sol};
@@ -63,9 +63,14 @@ pub fn encode_generic_call_forwarder_input(calls: &[GenericCall]) -> Result<Vec<
     Ok(sol_calls.abi_encode())
 }
 
-/// Computes `label_ref = hash(forwarder_addr ‖ abi_encode(calls))`.
-pub fn calculate_label_ref(forwarder_addr: &[u8], calls: &[u8]) -> Digest {
-    hash_bytes(&[forwarder_addr, calls].concat())
+/// Computes `label_ref = hash(forwarder_addr)`.
+pub fn calculate_label_ref(forwarder_addr: &[u8]) -> Digest {
+    hash_bytes(forwarder_addr)
+}
+
+/// Computes `value_ref = hash(abi_encode(calls))`.
+pub fn calculate_value_ref(encoded_calls: &[u8]) -> Digest {
+    hash_bytes(encoded_calls)
 }
 
 /// Witness for a single GenericCall resource (consumed or created ephemeral).
@@ -90,12 +95,19 @@ impl LogicCircuit for GenericCallWitness {
             ));
         }
 
-        let encoded_calls = encode_generic_call_forwarder_input(&self.calls)?;
-
-        let expected_label = calculate_label_ref(&self.forwarder_addr, &encoded_calls);
-        if self.resource.label_ref != expected_label {
+        let expected_label_ref = calculate_label_ref(&self.forwarder_addr);
+        if self.resource.label_ref != expected_label_ref {
             return Err(ArmError::ProveFailed(
                 "Invalid resource label_ref".to_string(),
+            ));
+        }
+
+        let encoded_calls = encode_generic_call_forwarder_input(&self.calls)?;
+
+        let expected_value_ref = calculate_value_ref(&encoded_calls);
+        if self.resource.value_ref != expected_value_ref {
+            return Err(ArmError::ProveFailed(
+                "Invalid resource value_ref".to_string(),
             ));
         }
 
