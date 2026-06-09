@@ -1,9 +1,11 @@
 [package]
 authors.workspace = true
+description = "Host-side proving API for the GenericCall logic."
 edition.workspace = true
 license.workspace = true
 name = "generic_call_library"
 readme.workspace = true
+repository.workspace = true
 version.workspace = true
 
 [dependencies]
