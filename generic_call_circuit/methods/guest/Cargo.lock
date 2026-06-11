@@ -1536,7 +1536,7 @@ dependencies = [
 
 [[package]]
 name = "generic-call-guest"
-version = "0.1.0"
+version = "1.0.0-rc.0"
 dependencies = [
  "generic_call_witness",
  "risc0-zkvm",
@@ -1544,7 +1544,7 @@ dependencies = [
 
 [[package]]
 name = "generic_call_witness"
-version = "2.0.0-rc2"
+version = "1.0.0-rc.0"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",

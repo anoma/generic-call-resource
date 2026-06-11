@@ -1789,7 +1789,7 @@ dependencies = [
 
 [[package]]
 name = "generic-call-circuit"
-version = "0.1.0"
+version = "1.0.0-rc.0"
 dependencies = [
  "anoma-rm-risc0",
  "generic_call_library",
@@ -1799,7 +1799,7 @@ dependencies = [
 
 [[package]]
 name = "generic_call_library"
-version = "2.0.0-rc2"
+version = "1.0.0-rc.0"
 dependencies = [
  "anoma-rm-risc0",
  "generic_call_witness",
@@ -1810,7 +1810,7 @@ dependencies = [
 
 [[package]]
 name = "generic_call_witness"
-version = "2.0.0-rc2"
+version = "1.0.0-rc.0"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",
