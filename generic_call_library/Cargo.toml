@@ -3,14 +3,14 @@ authors.workspace = true
 description = "Host-side proving API for the GenericCall logic."
 edition.workspace = true
 license.workspace = true
-name = "generic_call_library"
+name = "anoma-generic-call-library"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
 [dependencies]
+anoma-generic-call-witness = { workspace = true }
 anoma-rm-risc0 = { workspace = true, features = ["transaction", "prove"] }
-generic_call_witness = { workspace = true }
 hex = { workspace = true }
 lazy_static = { workspace = true }
 serde = { workspace = true, features = ["derive"] }

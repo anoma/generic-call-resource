@@ -5,11 +5,11 @@
 //! copy the output ELF to `elf/generic-call-guest.bin` and update `GENERIC_CALL_ID`
 //! with the printed image ID.
 
+pub use anoma_generic_call_witness::GenericCall;
+use anoma_generic_call_witness::GenericCallWitness;
 use anoma_rm_risc0::{
     Digest, logic_proof::LogicProver, nullifier_key::NullifierKey, resource::Resource,
 };
-pub use generic_call_witness::GenericCall;
-use generic_call_witness::GenericCallWitness;
 use hex::FromHex;
 use lazy_static::lazy_static;
 use serde::{Deserialize, Serialize};
@@ -18,7 +18,7 @@ pub const GENERIC_CALL_ELF: &[u8] = include_bytes!("../elf/generic-call-guest.bi
 
 lazy_static! {
     pub static ref GENERIC_CALL_ID: Digest =
-        Digest::from_hex("c84504b947d8f75f22da618a283a77743498c976f1db7da5be87e089d349304d")
+        Digest::from_hex("2dc3453bdfdef6a7eb735c749397986948c72311fac0c7d45da4e457ef7b2955")
             .unwrap();
 }
 
