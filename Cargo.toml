@@ -14,8 +14,8 @@ version = "1.0.0-rc.0"
 [workspace.dependencies]
 alloy-primitives = "1.0.23"
 alloy-sol-types = "1.0.23"
-anoma-generic-call-library = { path = "generic_call_library" }
-anoma-generic-call-witness = { path = "generic_call_witness" }
+anoma-generic-call-library = { path = "generic_call_library", version = "1.0.0-rc.0" }
+anoma-generic-call-witness = "1.0.0-rc.0"
 anoma-rm-risc0 = { version = "1.1.1", default-features = false }
 anoma-rm-risc0-gadgets = "1.1.1"
 hex = "0.4"
