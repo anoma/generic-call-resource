@@ -1,9 +1,9 @@
-use anoma_rm_risc0::{Digest, nullifier_key::NullifierKey, resource::Resource};
-use generic_call_library::GenericCallLogic;
-use generic_call_witness::{
+use anoma_generic_call_library::GenericCallLogic;
+use anoma_generic_call_witness::{
     GenericCall, GenericCallWitness, LogicCircuit, calculate_label_ref, calculate_value_ref,
     encode_generic_call_forwarder_input,
 };
+use anoma_rm_risc0::{Digest, nullifier_key::NullifierKey, resource::Resource};
 
 const FORWARDER_ADDR: [u8; 20] = [0u8; 20];
 const EVM_TARGET_ADDR: [u8; 20] = [1u8; 20];

@@ -1,12 +1,12 @@
 [package]
 edition = "2021"
-name = "generic-call-circuit"
-version = "0.1.0"
+name = "anoma-generic-call-circuit"
+version = "1.0.0-rc.0"
 
 [workspace]
 
 [dependencies]
+anoma-generic-call-library = { path = "../generic_call_library" }
+anoma-generic-call-witness = { path = "../generic_call_witness" }
 anoma-rm-risc0 = { version = "1.1.1", default-features = false }
-generic_call_library = { path = "../generic_call_library" }
-generic_call_witness = { path = "../generic_call_witness" }
 risc0-zkvm = "3.0.3"

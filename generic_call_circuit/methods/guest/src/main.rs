@@ -1,5 +1,5 @@
-use generic_call_witness::LogicCircuit;
-use generic_call_witness::GenericCallWitness;
+use anoma_generic_call_witness::LogicCircuit;
+use anoma_generic_call_witness::GenericCallWitness;
 use risc0_zkvm::guest::env;
 
 fn main() {
