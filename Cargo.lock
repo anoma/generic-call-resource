@@ -227,7 +227,7 @@ dependencies = [
 
 [[package]]
 name = "anoma-generic-call-library"
-version = "1.0.0-rc.0"
+version = "1.0.0"
 dependencies = [
  "anoma-generic-call-witness",
  "anoma-rm-risc0",
@@ -238,7 +238,7 @@ dependencies = [
 
 [[package]]
 name = "anoma-generic-call-witness"
-version = "1.0.0-rc.0"
+version = "1.0.0"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",

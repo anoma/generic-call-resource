@@ -1,7 +1,7 @@
 [package]
 edition = "2021"
 name = "anoma-generic-call-circuit"
-version = "1.0.0-rc.0"
+version = "1.0.0"
 
 [workspace]
 
