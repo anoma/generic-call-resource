@@ -230,7 +230,7 @@ name = "anoma-generic-call-circuit"
 version = "1.0.0"
 dependencies = [
  "anoma-generic-call-library",
- "anoma-generic-call-witness",
+ "anoma-generic-call-witness 1.0.0",
  "anoma-rm-risc0",
  "risc0-zkvm",
 ]
@@ -239,7 +239,7 @@ dependencies = [
 name = "anoma-generic-call-library"
 version = "1.0.0"
 dependencies = [
- "anoma-generic-call-witness",
+ "anoma-generic-call-witness 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "anoma-rm-risc0",
  "hex",
  "lazy_static",
@@ -249,6 +249,19 @@ dependencies = [
 [[package]]
 name = "anoma-generic-call-witness"
 version = "1.0.0"
+dependencies = [
+ "alloy-primitives",
+ "alloy-sol-types",
+ "anoma-rm-risc0",
+ "anoma-rm-risc0-gadgets",
+ "serde",
+]
+
+[[package]]
+name = "anoma-generic-call-witness"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef3e2cd88fa06fdb56f206ff4f2bca488ea13ddba496ae039a10c3f3b497d318"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",
