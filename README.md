@@ -62,6 +62,27 @@ the RISC0 toolchain, copy the resulting ELF into `generic_call_library/elf/`,
 and update `GENERIC_CALL_ID` in [`generic_call_library/src/lib.rs`](generic_call_library/src/lib.rs)
 with the printed image ID.
 
+## Audits
+
+Our software undergoes regular [audits](./audits/):
+
+1. Informal Systems
+   - Company Website: https://informal.systems
+   - Commit
+     ID: [4d561b11846fce692df49dbb73a5def97939e236](https://github.com/anoma/generic-call-resource/tree/4d561b11846fce692df49dbb73a5def97939e236)
+   - Started: 2026-06-15
+   - Finished: 2026-06-19
+   - Last revised: 2026-07-03
+
+   [📄 Audit Report (pdf)](./audits/2026-07-03_Informal_Systems_Generic_Call_Resource_&_Forwarder.pdf)
+
+## Security
+
+If you believe you've found a security issue, we encourage you to notify us via Email
+at [security@anoma.foundation](mailto:security@anoma.foundation).
+
+Please do not use the issue tracker for security issues. We welcome working with you to resolve the issue promptly.
+
 ## License
 
 GPL-3.0
