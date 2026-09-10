@@ -15,7 +15,7 @@ version = "3.0.0-rc.2"
 alloy-primitives = "1.0.23"
 alloy-sol-types = "1.0.23"
 anoma-generic-call-library = { path = "generic_call_library" }
-anoma-generic-call-witness = { path = "generic_call_witness" }
+anoma-generic-call-witness = "3.0.0-rc.2"
 anoma-rm-risc0 = { version = "2.0.0-rc.5", default-features = false }
 anoma-rm-risc0-gadgets = { version = "2.0.0-rc.5" }
 hex = "0.4"
