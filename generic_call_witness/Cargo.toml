@@ -4,7 +4,7 @@ description = "Witness library and zkVM constraint logic for the GenericCall kin
 edition.workspace = true
 license.workspace = true
 name = "anoma-generic-call-witness"
-readme.workspace = true
+readme = "README.md"
 repository.workspace = true
 version.workspace = true
 
