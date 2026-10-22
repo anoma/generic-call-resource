@@ -18,13 +18,22 @@ A `GenericCall` resource is **always ephemeral** and binds two references:
 - `value_ref = hash(abi_encode(calls))` — pins the resource to the exact set of
   EVM calls (`(address to, uint256 value, bytes data)[]`).
 
+The witness may additionally carry an optional `OrderingInfo` (`after_tags` /
+`before_tags`): tags of other resources whose forwarder calls must,
+respectively, have run or not yet have run when this resource's calls execute.
+`ordering_info: None` is an unordered call. The tags ride on the emitted
+forwarder calldata (`afterTags` / `beforeTags`) and are enforced by the protocol
+adapter, not by this circuit, so they are not committed in `label_ref` or
+`value_ref`.
+
 When the resource is constrained, the circuit:
 
 1. Asserts the resource is ephemeral.
 2. Recomputes `label_ref` and `value_ref` from the witness and checks them
    against the resource.
 3. Computes the resource's nullifier (if consumed) or commitment (if created).
-4. Emits the ABI-encoded forwarder calldata as an external payload blob (with
+4. Emits the ABI-encoded forwarder calldata — including the `afterTags` /
+   `beforeTags` ordering tags — as an external payload blob (with
    `DeletionCriterion::Immediately`) for the protocol adapter to deliver to the
    forwarder contract.
 
@@ -57,10 +66,33 @@ cargo test -- --nocapture
 
 `generic_call_library` embeds a prebuilt guest ELF
 (`generic_call_library/elf/generic-call-guest.bin`) and its image ID
-(`GENERIC_CALL_ID`). After changing the witness/circuit, rebuild the guest with
-the RISC0 toolchain, copy the resulting ELF into `generic_call_library/elf/`,
-and update `GENERIC_CALL_ID` in [`generic_call_library/src/lib.rs`](generic_call_library/src/lib.rs)
-with the printed image ID.
+(`GENERIC_CALL_ID`). After changing the witness/circuit, rebuild the guest
+reproducibly:
+
+```sh
+cargo risczero build --manifest-path generic_call_circuit/methods/guest/Cargo.toml
+```
+
+then copy the resulting ELF into `generic_call_library/elf/` and update
+`GENERIC_CALL_ID` in [`generic_call_library/src/lib.rs`](generic_call_library/src/lib.rs)
+with the printed image ID. Rotating it requires a protocol-adapter
+redeployment — see
+[`generic_call_circuit/README.md`](generic_call_circuit/README.md).
+
+## Versioning
+
+The workspace crates (`anoma-generic-call-witness`, `anoma-generic-call-library`)
+share the version in `[workspace.package]` (currently `2.0.0-rc.2`). The circuit
+crate is versioned independently (currently `1.0.0`).
+
+`rc.2` is a breaking release candidate, not a patch of `rc.1`: it bumps
+`anoma-rm-risc0` / `anoma-rm-risc0-gadgets` to `v2.0.0-rc.7.1`, whose
+`ForwarderCalldata` gained the `afterTags` / `beforeTags` ordering fields, and
+adds the matching `OrderingInfo` (`after_tags` / `before_tags`) as
+`GenericCallWitness::ordering_info` (so struct literals built against `rc.1` no
+longer compile). Both changes alter the
+ABI-encoded forwarder calldata the guest commits to, so `GENERIC_CALL_ID` was
+rotated.
 
 ## Audits
 

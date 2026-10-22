@@ -14,12 +14,17 @@ guest.
   (native token amount in wei), and `data` (ABI-encoded selector and calldata).
 - **`GenericCallWitness`** — the full witness for one resource: the `Resource`,
   whether it is consumed, the action tree root, the (optional) nullifier key,
-  the forwarder address, and the list of calls.
+  the forwarder address, the list of calls, and the optional `ordering_info`
+  (set with `GenericCallWitness::with_ordering`).
+- **`OrderingInfo`** — the `after_tags` / `before_tags` call-ordering tags; see
+  [Call ordering](#call-ordering).
 - **`encode_generic_call_forwarder_input`** — ABI-encodes `&[GenericCall]` as
   `Call[]`, matching `abi.decode(input, (Call[]))` in the
   `GenericCallForwarder` contract.
 - **`calculate_label_ref`** / **`calculate_value_ref`** — compute
   `hash(forwarder_addr)` and `hash(abi_encode(calls))` respectively.
+- **`encode_ordering_tags`** — encodes the `after_tags` / `before_tags` of
+  `OrderingInfo` as the `bytes32` ordering tags carried by `ForwarderCalldata`.
 
 ## Constraint logic
 
@@ -34,6 +39,28 @@ guest.
 On success it returns a `LogicInstance` carrying the resource's nullifier
 (consumed) or commitment (created), and the ABI-encoded forwarder calldata as an
 external payload blob for the protocol adapter to deliver.
+
+## Call ordering
+
+`GenericCallWitness` carries an optional `OrderingInfo`:
+
+```rust
+pub struct OrderingInfo {
+    pub after_tags: Vec<Digest>,  // calls that must run before this one
+    pub before_tags: Vec<Digest>, // calls that must not run before this one
+}
+```
+
+A tag in `after_tags` names a resource whose forwarder calls must have run
+before this resource's calls, one in `before_tags` a resource whose calls must
+not have. `ordering_info: None` — the default for every constructor — is an
+unordered call, and `GenericCallWitness::with_ordering` (or
+`GenericCallLogic::with_ordering` on the host side) sets it.
+
+When it is present, `constrain` copies the tags onto the forwarder calldata's
+`afterTags` / `beforeTags` fields; the protocol adapter enforces the ordering
+when it delivers the calls. They are *not* part of `label_ref` or `value_ref`,
+so changing them does not change the resource.
 
 ## Usage
 

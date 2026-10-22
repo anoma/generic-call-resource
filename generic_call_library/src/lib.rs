@@ -1,9 +1,11 @@
 //! Host-side prover for GenericCall resource logic.
 //!
-//! `GENERIC_CALL_ELF` and `GENERIC_CALL_ID` are placeholders. After building
-//! the guest with the RISC0 toolchain (`cd crates/generic_call_circuit && cargo build`),
-//! copy the output ELF to `elf/generic-call-guest.bin` and update `GENERIC_CALL_ID`
-//! with the printed image ID.
+//! `GENERIC_CALL_ELF` and `GENERIC_CALL_ID` are the committed guest build. To
+//! rotate them, rebuild the guest reproducibly
+//! (`cargo risczero build --manifest-path generic_call_circuit/methods/guest/Cargo.toml`),
+//! copy the output ELF to `elf/generic-call-guest.bin` and update
+//! `GENERIC_CALL_ID` with the printed image ID. See
+//! `generic_call_circuit/README.md`.
 
 pub use anoma_generic_call_witness::GenericCall;
 use anoma_generic_call_witness::GenericCallWitness;
@@ -18,7 +20,7 @@ pub const GENERIC_CALL_ELF: &[u8] = include_bytes!("../elf/generic-call-guest.bi
 
 lazy_static! {
     pub static ref GENERIC_CALL_ID: Digest =
-        Digest::from_hex("2f71f7400e151cfcda2e0335c8aac595237fbbd098e739659ef940bd1a5a9c02")
+        Digest::from_hex("dc64937e533f5eccf6041da5f49c905e6a28f76111ae2a5bc24160e67bd50dea")
             .unwrap();
 }
 
@@ -47,6 +49,7 @@ impl GenericCallLogic {
                 nf_key: Some(nf_key),
                 forwarder_addr,
                 calls,
+                ordering_info: None,
             },
         }
     }
@@ -66,8 +69,19 @@ impl GenericCallLogic {
                 nf_key: None,
                 forwarder_addr,
                 calls,
+                ordering_info: None,
             },
         }
+    }
+
+    /// Sets the `OrderingInfo` on the wrapped witness, constraining when this
+    /// resource's forwarder call runs relative to the calls of other resources:
+    /// a tag in `after_tags` names a resource whose calls must have run
+    /// already, a tag in `before_tags` one whose calls must not have. Without
+    /// it the call is unordered (`ordering_info: None`).
+    pub fn with_ordering(mut self, after_tags: Vec<Digest>, before_tags: Vec<Digest>) -> Self {
+        self.witness = self.witness.with_ordering(after_tags, before_tags);
+        self
     }
 }
 
