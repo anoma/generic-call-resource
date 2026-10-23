@@ -16,8 +16,8 @@ alloy-primitives = "1.0.23"
 alloy-sol-types = "1.0.23"
 anoma-generic-call-library = { version = "2.0.0-rc.2", path = "generic_call_library" }
 anoma-generic-call-witness = { version = "2.0.0-rc.2", path = "generic_call_witness" }
-anoma-rm-risc0 = { default-features = false, git = "https://github.com/anoma/arm-risc0", tag = "v2.0.0-rc.7.1", version = "2.0.0-rc.7.1" }
-anoma-rm-risc0-gadgets = { git = "https://github.com/anoma/arm-risc0", tag = "v2.0.0-rc.7.1", version = "2.0.0-rc.7.1" }
+anoma-rm-risc0 = { default-features = false, git = "https://github.com/anoma/arm-risc0", rev = "aaac2d2dc795c45c50615b0bf0ed5f8bc06cff9e", version = "2.0.0-rc.7.1" }
+anoma-rm-risc0-gadgets = { git = "https://github.com/anoma/arm-risc0", rev = "aaac2d2dc795c45c50615b0bf0ed5f8bc06cff9e", version = "2.0.0-rc.7.1" }
 hex = "0.4"
 lazy_static = "1.5.0"
 serde = { version = "1.0", features = ["derive"] }
