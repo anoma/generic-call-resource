@@ -20,7 +20,7 @@ pub const GENERIC_CALL_ELF: &[u8] = include_bytes!("../elf/generic-call-guest.bi
 
 lazy_static! {
     pub static ref GENERIC_CALL_ID: Digest =
-        Digest::from_hex("dc64937e533f5eccf6041da5f49c905e6a28f76111ae2a5bc24160e67bd50dea")
+        Digest::from_hex("781160e88a2b86d3e2192bd491f2b8b1de5d70e85e590112a027bd48f91d9685")
             .unwrap();
 }
 
@@ -49,7 +49,6 @@ impl GenericCallLogic {
                 nf_key: Some(nf_key),
                 forwarder_addr,
                 calls,
-                ordering_info: None,
             },
         }
     }
@@ -69,19 +68,8 @@ impl GenericCallLogic {
                 nf_key: None,
                 forwarder_addr,
                 calls,
-                ordering_info: None,
             },
         }
-    }
-
-    /// Sets the `OrderingInfo` on the wrapped witness, constraining when this
-    /// resource's forwarder call runs relative to the calls of other resources:
-    /// a tag in `after_tags` names a resource whose calls must have run
-    /// already, a tag in `before_tags` one whose calls must not have. Without
-    /// it the call is unordered (`ordering_info: None`).
-    pub fn with_ordering(mut self, after_tags: Vec<Digest>, before_tags: Vec<Digest>) -> Self {
-        self.witness = self.witness.with_ordering(after_tags, before_tags);
-        self
     }
 }
 

@@ -14,17 +14,14 @@ which reproduces:
 
 ```bash
 ELFs ready at:
-ImageID: dc64937e533f5eccf6041da5f49c905e6a28f76111ae2a5bc24160e67bd50dea
+ImageID: 781160e88a2b86d3e2192bd491f2b8b1de5d70e85e590112a027bd48f91d9685
 generic_call_circuit/methods/guest/target/riscv32im-risc0-zkvm-elf/docker/generic-call-guest.bin
 ```
 
 The same build is also embedded as the committed guest binary at `generic_call_library/elf/generic-call-guest.bin` in this repo.
 
 It was last rotated for the `anoma-rm-risc0` / `anoma-rm-risc0-gadgets` bump to
-`v2.0.0-rc.7.1`, which added the `afterTags` / `beforeTags` ordering fields to
-`ForwarderCalldata`, and for the witness-side `OrderingInfo` (`after_tags` /
-`before_tags`) that now populates them — both change the ABI-encoded forwarder
-calldata the guest commits to.
+`v2.0.0-rc.8`, which re-links the guest against the new ARM libraries.
 
 ## ImageID drift after future changes
 

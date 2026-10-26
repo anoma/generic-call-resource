@@ -1,12 +1,9 @@
 use anoma_generic_call_library::GenericCallLogic;
 use anoma_generic_call_witness::{
     GenericCall, GenericCallWitness, LogicCircuit, calculate_label_ref, calculate_value_ref,
-    encode_generic_call_forwarder_input, encode_ordering_tags,
+    encode_generic_call_forwarder_input,
 };
-use anoma_rm_risc0::{
-    Digest, nullifier_key::NullifierKey, resource::Resource, utils::words_to_bytes,
-};
-use anoma_rm_risc0_gadgets::evm::ForwarderCalldata;
+use anoma_rm_risc0::{Digest, nullifier_key::NullifierKey, resource::Resource};
 
 const FORWARDER_ADDR: [u8; 20] = [0u8; 20];
 const EVM_TARGET_ADDR: [u8; 20] = [1u8; 20];
@@ -85,7 +82,6 @@ fn test_non_ephemeral_rejected() {
         nf_key: None,
         forwarder_addr: FORWARDER_ADDR.to_vec(),
         calls: calls(),
-        ordering_info: None,
     };
     witness.constrain().unwrap_err();
 }
@@ -100,7 +96,6 @@ fn test_missing_nf_key() {
         nf_key: None, // missing
         forwarder_addr: FORWARDER_ADDR.to_vec(),
         calls: calls(),
-        ordering_info: None,
     };
     witness.constrain().unwrap_err();
 }
@@ -118,7 +113,6 @@ fn test_wrong_label_ref() {
         nf_key: None,
         forwarder_addr: FORWARDER_ADDR.to_vec(),
         calls: calls(),
-        ordering_info: None,
     };
     witness.constrain().unwrap_err();
 }
@@ -137,47 +131,6 @@ fn test_wrong_value_ref() {
         nf_key: None,
         forwarder_addr: FORWARDER_ADDR.to_vec(),
         calls: calls(),
-        ordering_info: None,
     };
     witness.constrain().unwrap_err();
-}
-
-#[test]
-fn test_ordering_tags_are_forwarded() {
-    let after = Digest::new([3u32; 8]);
-    let before = Digest::new([4u32; 8]);
-    let logic = GenericCallLogic::consumed_ephemeral_resource_logic(
-        ephemeral_resource(),
-        Digest::default(),
-        NullifierKey::from_bytes(NF_KEY_BYTES),
-        FORWARDER_ADDR.to_vec(),
-        calls(),
-    )
-    .with_ordering(vec![after], vec![before]);
-
-    let instance = logic.witness.constrain().unwrap();
-    let blob = &instance.app_data.external_payload[0];
-    let calldata = ForwarderCalldata::decode(words_to_bytes(&blob.blob)).unwrap();
-
-    assert_eq!(calldata.afterTags, encode_ordering_tags(&[after]));
-    assert_eq!(calldata.beforeTags, encode_ordering_tags(&[before]));
-}
-
-#[test]
-fn test_unordered_call_carries_no_tags() {
-    let logic = GenericCallLogic::consumed_ephemeral_resource_logic(
-        ephemeral_resource(),
-        Digest::default(),
-        NullifierKey::from_bytes(NF_KEY_BYTES),
-        FORWARDER_ADDR.to_vec(),
-        calls(),
-    );
-    assert!(logic.witness.ordering_info.is_none());
-
-    let instance = logic.witness.constrain().unwrap();
-    let blob = &instance.app_data.external_payload[0];
-    let calldata = ForwarderCalldata::decode(words_to_bytes(&blob.blob)).unwrap();
-
-    assert!(calldata.afterTags.is_empty());
-    assert!(calldata.beforeTags.is_empty());
 }
