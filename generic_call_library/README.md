@@ -18,10 +18,6 @@ generate resource-logic proofs.
   for a consumed ephemeral resource (requires a nullifier key).
 - **`GenericCallLogic::created_ephemeral_resource_logic`** — build the logic for
   a created (balancing) ephemeral resource.
-- **`GenericCallLogic::with_ordering`** — set the witness' `OrderingInfo`
-  (`after_tags` / `before_tags`), constraining when this resource's forwarder
-  call runs relative to the calls of other resources. Without it the call is
-  unordered (`ordering_info: None`).
 - **`GENERIC_CALL_ELF`** / **`GENERIC_CALL_ID`** — the embedded guest binary and
   its image ID.
 - Re-exports **`GenericCall`** from `generic_call_witness` for convenience.
@@ -43,9 +39,6 @@ let logic = GenericCallLogic::consumed_ephemeral_resource_logic(
     }],
 );
 // `logic` implements `LogicProver` and can be used to generate a proof.
-
-// Optionally constrain when these calls run relative to other resources' calls:
-let logic = logic.with_ordering(vec![earlier_resource_tag], vec![]);
 ```
 
 ## Regenerating the guest ELF and image ID
