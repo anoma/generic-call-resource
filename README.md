@@ -3,6 +3,8 @@
 An [Anoma Resource Machine](https://github.com/anoma/anoma-rm-risc0) (ARM)
 application that lets an Anoma transaction trigger arbitrary EVM calls.
 
+The [documentation](./docs/README.md) specifies the resource logic: what it checks, what it leaves unchecked, and why.
+
 A `GenericCall` resource encodes one or more EVM calls. When the resource is
 consumed/created, the protocol adapter forwards those calls to the on-chain
 `GenericCallForwarder` contract, which executes them on the target EVM. The
