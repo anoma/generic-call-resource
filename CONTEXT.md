@@ -28,11 +28,20 @@ Two hashes in a resource. The label ref separates the resources of one resource 
 **Action tree root**:
 The root of a Merkle tree over the tags of an action, in the order of its list.
 
+**App data / Deletion criterion**:
+The app data of a resource holds four lists of blobs: the resource payload, the discovery payload, the external payload and the application payload. The deletion criterion of a blob is `Never` or `Immediately`. The protocol adapter emits each blob with `Never` as an event. Each blob of the external payload is an external call, whatever its deletion criterion.
+
 **External call**:
 A call that the protocol adapter makes to a forwarder when it processes a resource. The external payload of the resource carries it.
 
 **Protocol adapter**:
 The contract that verifies transactions on an EVM chain and makes the external calls of their resources.
+
+**Kind / Kind point**:
+The kind of a resource is the hash to curve of its logic ref and its label ref. Its kind point is the point that the compliance circuit multiplies by its quantity. Resources balance against each other only if they have the same kind point.
+
+**Compliance unit / Aggregation proof / Delta proof**:
+Each action has one compliance unit. Its compliance proof shows the **compliance checks**: the in-circuit checks that the action follows the rules of the ARM. The aggregation proof aggregates the compliance proofs and the resource logic proofs of a transaction into one proof, so the protocol adapter verifies only the aggregation proof and the delta proof. The delta proof shows that a transaction balances: for each kind point, the consumed and the created quantities are equal.
 
 **In-circuit check**:
 A check that a circuit makes: a proof of the circuit is valid only if the check holds.
