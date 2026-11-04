@@ -33,8 +33,8 @@ So the proof fixes the forwarder and the calls of the resource. The aggregation 
 
 ## 4. Trust assumptions
 
-- **Other resources authorize the calls.** An action that gives the forwarder tokens must also authorize the calls, for example through the signature of the owner over the action tree root.
-- **The forwarder holds no tokens after a transaction.** The calls of any later transaction can take tokens that stay in the forwarder.
+- **Other resources of the action authorize the calls.** An action that gives the forwarder tokens must also authorize the calls, for example through the signature of the owner over the action tree root.
+- **A transaction leaves no tokens and no allowances in the forwarder.** The calls of any later transaction can take tokens that stay in the forwarder.
 
 ## 5. Parameters
 
