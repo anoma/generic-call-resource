@@ -37,11 +37,12 @@ A call that the protocol adapter makes to a forwarder when it processes a resour
 **Protocol adapter**:
 The contract that verifies transactions on an EVM chain and makes the external calls of their resources.
 
-**Kind / Kind point**:
-The kind of a resource is the hash to curve of its logic ref and its label ref. Its kind point is the point that the compliance circuit multiplies by its quantity. Resources balance against each other only if they have the same kind point.
+**Kind / Kind base**:
+The kind of a resource is the hash to curve of its logic ref and its label ref. Its kind base is the point that the compliance circuit multiplies by its quantity. Resources balance against each other only if they have the same kind base.
+_Avoid_: kind point
 
 **Compliance unit / Aggregation proof / Delta proof**:
-Each action has one compliance unit. Its compliance proof shows the **compliance checks**: the in-circuit checks that the action follows the rules of the ARM. The aggregation proof aggregates the compliance proofs and the resource logic proofs of a transaction into one proof, so the protocol adapter verifies only the aggregation proof and the delta proof. The delta proof shows that a transaction balances: for each kind point, the consumed and the created quantities are equal.
+Each action has one compliance unit. Its compliance proof shows the **compliance checks**: the in-circuit checks that the action follows the rules of the ARM. The aggregation proof aggregates the compliance proofs and the resource logic proofs of a transaction into one proof, so the protocol adapter verifies only the aggregation proof and the delta proof. The delta proof shows that a transaction balances: for each kind base, the consumed and the created quantities are equal.
 
 **In-circuit check**:
 A check that a circuit makes: a proof of the circuit is valid only if the check holds.
