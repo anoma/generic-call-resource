@@ -75,15 +75,17 @@ redeployment — see
 ## Versioning
 
 The workspace crates (`anoma-generic-call-witness`, `anoma-generic-call-library`)
-share the version in `[workspace.package]` (currently `2.0.0-rc.4`). The circuit
+share the version in `[workspace.package]` (currently `2.0.0-rc.5`). The circuit
 crate is versioned independently (currently `1.0.0`).
 
-`rc.4` bumps `anoma-rm-risc0` / `anoma-rm-risc0-gadgets` to `v2.0.0-rc.8.1`
-(`rc.3` tracked `v2.0.0-rc.8`). This crate's own API is unchanged, but ARM types
-(`Resource`, `Digest`, `NullifierKey`) appear in it, so a consumer has to move to
-the same ARM version — and `rc.8.1` renamed `LogicInstance::root` to
-`action_tree_root`, which a consumer reading that field has to follow. The
-upgrade also re-links the guest, so `GENERIC_CALL_ID` was rotated.
+`rc.5` bumps `anoma-rm-risc0` / `anoma-rm-risc0-gadgets` to `v2.0.0-rc.9`
+(`rc.4` tracked `v2.0.0-rc.8.1`). This crate's own API is unchanged, but ARM
+types (`Resource`, `Digest`, `NullifierKey`) appear in it, so a consumer has to
+move to the same ARM version. ARM `rc.9` also moves to `risc0-zkvm` 3.1.0, which
+the circuit and guest now pin, so reproducing the `ImageID` needs a matching
+`cargo-risczero` — see
+[`generic_call_circuit/README.md`](generic_call_circuit/README.md). The upgrade
+re-links the guest, so `GENERIC_CALL_ID` was rotated.
 
 ## Audits
 
