@@ -20,7 +20,7 @@ pub const GENERIC_CALL_ELF: &[u8] = include_bytes!("../elf/generic-call-guest.bi
 
 lazy_static! {
     pub static ref GENERIC_CALL_ID: Digest =
-        Digest::from_hex("1613d70bd4aca93235216f38c0bcb5cd747376a2a6135d58f196adef2e6dfc3b")
+        Digest::from_hex("1534f842d9d987287cafb85b3547aee064c06140f17a5d45e914a2861a66826d")
             .unwrap();
 }
 

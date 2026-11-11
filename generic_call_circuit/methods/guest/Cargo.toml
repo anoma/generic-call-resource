@@ -8,4 +8,4 @@ version = "1.0.0"
 [dependencies]
 # If you want to try (experimental) std support, add `features = [ "std" ]` to risc0-zkvm
 anoma-generic-call-witness = { path = "../../../generic_call_witness" }
-risc0-zkvm = { version = "3.0.3", features = ["std", "unstable"] }
+risc0-zkvm = { version = "3.1.0", features = ["std", "unstable"] }

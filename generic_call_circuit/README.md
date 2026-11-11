@@ -14,14 +14,15 @@ which reproduces:
 
 ```bash
 ELFs ready at:
-ImageID: 1613d70bd4aca93235216f38c0bcb5cd747376a2a6135d58f196adef2e6dfc3b
+ImageID: 1534f842d9d987287cafb85b3547aee064c06140f17a5d45e914a2861a66826d
 generic_call_circuit/methods/guest/target/riscv32im-risc0-zkvm-elf/docker/generic-call-guest.bin
 ```
 
 The same build is also embedded as the committed guest binary at `generic_call_library/elf/generic-call-guest.bin` in this repo.
 
 It was last rotated for the `anoma-rm-risc0` / `anoma-rm-risc0-gadgets` bump to
-`v2.0.0-rc.8.1`, which re-links the guest against the new ARM libraries.
+`v2.0.0-rc.9`, which re-links the guest against the new ARM libraries and moves
+it to `risc0-zkvm` 3.1.0.
 
 ## ImageID drift after future changes
 
@@ -57,5 +58,5 @@ If you need the two values to agree (e.g., before a release that does change cir
 Note: The unstable feature of risc0-zkvm currently causes issues in circuits. This can be temporarily fixed by manually updating the tool. The problem will be fully resolved in the next release of RISC Zero.
 
 ```bash
-cargo install --force --git https://github.com/risc0/risc0 --tag v3.0.3 -Fexperimental cargo-risczero
+cargo install --force --git https://github.com/risc0/risc0 --tag v3.1.0 -Fexperimental cargo-risczero
 ```
