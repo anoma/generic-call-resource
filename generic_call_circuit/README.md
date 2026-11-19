@@ -14,15 +14,15 @@ which reproduces:
 
 ```bash
 ELFs ready at:
-ImageID: 1534f842d9d987287cafb85b3547aee064c06140f17a5d45e914a2861a66826d
+ImageID: 3f3c5332e8a24ab34a30884f6761e1cb4eca8293f991e5a3a141b8e5a3ccf09f
 generic_call_circuit/methods/guest/target/riscv32im-risc0-zkvm-elf/docker/generic-call-guest.bin
 ```
 
 The same build is also embedded as the committed guest binary at `generic_call_library/elf/generic-call-guest.bin` in this repo.
 
 It was last rotated for the `anoma-rm-risc0` / `anoma-rm-risc0-gadgets` bump to
-`v2.0.0-rc.9`, which re-links the guest against the new ARM libraries and moves
-it to `risc0-zkvm` 3.1.0.
+`v2.0.0`, which re-links the guest against the new ARM libraries. The guest
+stays on `risc0-zkvm` 3.1.0.
 
 ## ImageID drift after future changes
 

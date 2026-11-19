@@ -75,17 +75,21 @@ redeployment — see
 ## Versioning
 
 The workspace crates (`anoma-generic-call-witness`, `anoma-generic-call-library`)
-share the version in `[workspace.package]` (currently `2.0.0-rc.5`). The circuit
+share the version in `[workspace.package]` (currently `2.0.0`). The circuit
 crate is versioned independently (currently `1.0.0`).
 
-`rc.5` bumps `anoma-rm-risc0` / `anoma-rm-risc0-gadgets` to `v2.0.0-rc.9`
-(`rc.4` tracked `v2.0.0-rc.8.1`). This crate's own API is unchanged, but ARM
-types (`Resource`, `Digest`, `NullifierKey`) appear in it, so a consumer has to
-move to the same ARM version. ARM `rc.9` also moves to `risc0-zkvm` 3.1.0, which
-the circuit and guest now pin, so reproducing the `ImageID` needs a matching
-`cargo-risczero` — see
-[`generic_call_circuit/README.md`](generic_call_circuit/README.md). The upgrade
-re-links the guest, so `GENERIC_CALL_ID` was rotated.
+`2.0.0` is the stable release of the `2.0.0` line. It tracks `anoma-rm-risc0` /
+`anoma-rm-risc0-gadgets` `v2.0.0` (`rc.5` tracked `v2.0.0-rc.9`). This crate's
+own API is unchanged, but ARM types (`Resource`, `Digest`, `NullifierKey`)
+appear in it, so a consumer has to move to the same ARM version. ARM `v2.0.0`
+leaves the logic-instance journal encoding unchanged, and its new
+`deletion_criterion` range check runs in the aggregation witness, not in logic
+guests, so the proof semantics of the generic call circuit stay the same. The
+upgrade still re-links the guest against the new ARM libraries, so the
+committed ELF and `GENERIC_CALL_ID` were rotated. The circuit and guest still
+pin `risc0-zkvm` 3.1.0, so reproducing the committed `ImageID` needs a
+matching `cargo-risczero` — see
+[`generic_call_circuit/README.md`](generic_call_circuit/README.md).
 
 ## Audits
 
